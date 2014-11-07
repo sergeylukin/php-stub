@@ -8,7 +8,7 @@ class StubTest extends \PHPUnit_Framework_TestCase
 {
     public function testThatAStubRespondToDefinedMethods()
     {
-        $stub = new Stub(['getId' => 42]);
+        $stub = new Stub(array('getId' => 42));
         $this->assertSame(42, $stub->getId());
     }
 
@@ -34,19 +34,19 @@ class StubTest extends \PHPUnit_Framework_TestCase
 
     public function testCanAccessAsProperty()
     {
-        $stub = new Stub(['property' => 42]);
+        $stub = new Stub(array('property' => 42));
         $this->assertSame(42, $stub->property);
     }
 
     public function testPropertiesCanBeSeenByIsset()
     {
-        $stub = new Stub(['property' => 42]);
+        $stub = new Stub(array('property' => 42));
         $this->assertTrue(isset($stub->property), 'Properies can be seen by isset');
     }
 
     public function testPropertiesCanBeUnset()
     {
-        $stub = new Stub(['property' => 42]);
+        $stub = new Stub(array('property' => 42));
         unset($stub->property);
         $this->assertFalse(isset($stub->property), 'Properies can be unset');
     }
@@ -57,13 +57,13 @@ class StubTest extends \PHPUnit_Framework_TestCase
             return $argument;
         };
 
-        $stub = new Stub(['identity' => $identity]);
+        $stub = new Stub(array('identity' => $identity));
         $this->assertSame(42, $stub->identity(42));
     }
 
     public function testThatItWillCallANamedCallable()
     {
-        $stub = new Stub(['callMe' => [$this, 'callMeMaybe']]);
+        $stub = new Stub(array('callMe' => array($this, 'callMeMaybe')));
         $this->assertSame("Hello, Rebecca", $stub->callMe("Rebecca"));
     }
 
@@ -81,7 +81,7 @@ class StubTest extends \PHPUnit_Framework_TestCase
 
     public function testThatItReturnsNullIfConfigured()
     {
-        $stub = new Stub([], ['chainable' => false]);
+        $stub = new Stub(array(), array('chainable' => false));
         $this->assertSame(null, $stub->getId());
     }
 
@@ -90,7 +90,7 @@ class StubTest extends \PHPUnit_Framework_TestCase
      */
     public function testThatItThrowsIfConfigured()
     {
-        $stub = new Stub([], ['throw' => true]);
+        $stub = new Stub(array(), array('throw' => true));
         $stub->getId();
     }
 
@@ -101,12 +101,12 @@ class StubTest extends \PHPUnit_Framework_TestCase
     public function testThatItThrowsSpecifiedExceptionIfConfigured()
     {
         $stub = new Stub(
-            [],
-            [
+            array(),
+            array(
                 'throw' => true,
                 'exceptionclass' => 'InvalidArgumentException',
                 'exceptionmessage' => 'Bad method call'
-            ]
+            )
         );
         $stub->getId();
     }
